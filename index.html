@@ -3,41 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading...</title>
+<title>Job Notification</title>
 
 <style>
 body {
     margin: 0;
     overflow: hidden;
     background: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
-
-#loader {
-    text-align: center;
-}
-
-.spinner {
-    border: 6px solid #333;
-    border-top: 6px solid white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    margin: 20px auto;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-/* Video */
+/* Video fullscreen */
 #video {
     position: fixed;
     top: 0;
@@ -45,55 +20,33 @@ body {
     width: 100vw;
     height: 100vh;
 
-    object-fit: contain;   
+    object-fit: contain;  /* no cropping */
     background: black;
 
     display: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
 }
 </style>
 </head>
 
 <body>
 
-
-<div id="loader">
-    <h2>Loading...</h2>
-    <div class="spinner"></div>
-</div>
-
-
-<video id="video" playsinline preload="auto">
+<!-- Video -->
+<video id="video" playsinline>
     <source src="jamir.mp4" type="video/mp4">
 </video>
 
 <script>
-const video = document.getElementById("video");
-
-
-setTimeout(() => {
-    document.getElementById("loader").style.display = "none";
-    video.style.display = "block";
-
-    video.play().then(() => {
-        video.muted = false; // try sound
-    }).catch(() => {
-        console.log("Autoplay blocked");
-    });
-
-    
+window.onload = () => {
     setTimeout(() => {
-        video.style.opacity = "1";
-    }, 50);
+        alert("You are now accessing job_notification");
 
-}, 1500);
+        let video = document.getElementById("video");
+        video.style.display = "block";
 
-
-document.addEventListener("click", () => {
-    video.muted = false;
-    video.play();
-});
+        video.muted = false; // sound ON
+        video.play();
+    }, 1000); // 1 second delay
+};
 </script>
 
 </body>
