@@ -11,12 +11,13 @@ body {
     overflow: hidden;
     background: black;
     color: white;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
+
 
 #loader {
     text-align: center;
@@ -36,36 +37,61 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+/* Video */
 #video {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
+
+    object-fit: contain;   
+    background: black;
+
     display: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 </style>
 </head>
 
 <body>
 
+
 <div id="loader">
-    <h2>Tap to continue...</h2>
+    <h2>Loading...</h2>
     <div class="spinner"></div>
 </div>
 
-<video id="video" playsinline>
+
+<video id="video" playsinline preload="auto">
     <source src="jamir.mp4" type="video/mp4">
 </video>
 
 <script>
-document.body.addEventListener("click", () => {
-    document.getElementById("loader").style.display = "none";
+const video = document.getElementById("video");
 
-    let video = document.getElementById("video");
+
+setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
     video.style.display = "block";
-    video.muted = false; // sound ON
+
+    video.play().then(() => {
+        video.muted = false; // try sound
+    }).catch(() => {
+        console.log("Autoplay blocked");
+    });
+
+    
+    setTimeout(() => {
+        video.style.opacity = "1";
+    }, 50);
+
+}, 1500);
+
+
+document.addEventListener("click", () => {
+    video.muted = false;
     video.play();
 });
 </script>
